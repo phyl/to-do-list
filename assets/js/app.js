@@ -101,8 +101,8 @@ function localStorageOnLoad() {
 
     //Loop through storage and then print the values
 
-    //tweets.forEach((tweet) {
-    Array.prototype.forEach.call(tweets, function (tweet) {
+    tweets.forEach(function (tweet) {
+   // Array.prototype.forEach.call(tweets, function (tweet) {
         //The remove button
         const removeBtn = document.createElement('a');
         removeBtn.classList = 'remove-tweet';
@@ -134,12 +134,12 @@ function removeTweetLocalStorage(tweet) {
 
     //Loop through the tweets and remove the tweet that's equal
 
-    //tweets.forEach((tweetLS, index) {
-    Array.prototype.forEach.call(tweets, function(tweetLS, index) {
+    tweets.forEach(function(tweetLS, index) {
         if(tweetDelete === tweetLS) {
             tweets.splice(index, 1);
         } 
     });
+
 
     //Save data - without the removed list
     localStorage.setItem('tweets', JSON.stringify(tweet));
