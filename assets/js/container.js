@@ -129,18 +129,18 @@ function removeTweetLocalStorage(tweet) {
     let tweets = getTweetsFromLocalStorage();
 
     // Remove the X from tweet
-    const tweetDelete = tweet.substring( 0, tweet.length - 1 );
+    const tweetDelete = tweet.substring(0, tweet.length - 1);
 
     //Loop through the tweets and remove the tweet that's equal
 
-    tweets.forEach(function(tweetLS, index) {
-        if(tweetDelete === tweetLS) {
+    tweets.forEach(function (tweetLS, index) {
+        if (tweetDelete === tweetLS) {
             tweets.splice(index, 1);
-        } 
+        }
     });
 
     //Save data - without the removed list
-    localStorage.setItem('tweets', JSON.stringify(tweet));
+    localStorage.setItem('tweets', JSON.stringify(tweets));
 
 
 }
