@@ -1,18 +1,18 @@
 //Variables section
-const tweetList = document.getElementById('tweet-list')
+const taskList = document.getElementById('task-list')
 
 //Event Listeners section
 eventListeners();
 
 function eventListeners() {
-    document.querySelector('#form').addEventListener('submit', newTweet);
+    document.querySelector('#form').addEventListener('submit', newTask);
 
     //Cancel task from list
-    tweetList.addEventListener('click', cancelTweet);
+    taskList.addEventListener('click', cancelTask);
 
 
-    //Remove tweet from list
-    tweetList.addEventListener('click', removeTweet);
+    //Remove task from list
+    taskList.addEventListener('click', removeTask);
 
     //Document
     document.addEventListener('DOMContentLoaded', localStorageOnLoad);
@@ -21,16 +21,16 @@ function eventListeners() {
 
 //Functions section
 
-function newTweet(e) {
+function newTask(e) {
     e.preventDefault();
 
     //Reading the text area
 
-    const tweet = document.getElementById('tweet').value;
+    const task = document.getElementById('task').value;
 
     //The remove button
     const removeBtn = document.createElement('a');
-    removeBtn.classList = 'remove-tweet';
+    removeBtn.classList = 'remove-task';
     removeBtn.textContent = 'X';
 
     //Add text to the list
@@ -38,70 +38,70 @@ function newTweet(e) {
     const li = document.createElement('li');
     //li = document.createElement('a');
     //br = document.createElement('br');
-    li.textContent = tweet;
+    li.textContent = task;
 
     //Add the remove button
     li.appendChild(removeBtn);
 
     //Add items to the list
-    tweetList.appendChild(li);
-    //tweetList.appendChild(br);
+    taskList.appendChild(li);
+    //taskList.appendChild(br);
 
-    addTweetLocalStorage(tweet);
+    addTaskLocalStorage(task);
 
     // Print the alert
-    alert('Tweet Added');
+    alert('Task Added');
 
     this.reset();
 }
 //Cancel task
-function cancelTweet(tweetList) {
-    tweetList.target.style.textDecoration = "line-through";
+function cancelTask(taskList) {
+    taskList.target.style.textDecoration = "line-through";
 
 }
 
-//Remove the tweet from DOm
-function removeTweet(e) {
-    if (e.target.classList.contains('remove-tweet')) {
+//Remove the task from DOm
+function removeTask(e) {
+    if (e.target.classList.contains('remove-task')) {
         e.target.parentElement.remove();
     }
 
     // Remove from Storage
-    removeTweetLocalStorage(e.target.parentElement.textContent);
+    removeTaskLocalStorage(e.target.parentElement.textContent);
 }
 
-function addTweetLocalStorage(tweet) {
-    let tweets = getTweetsFromLocalStorage();
+function addTaskLocalStorage(task) {
+    let tasks = getTasksFromLocalStorage();
 
-    //add the tweet into the aray
-    tweets.push(tweet);
+    //add the task into the aray
+    tasks.push(task);
 
-    //convert tweet array to a string
-    localStorage.setItem('tweets', JSON.stringify(tweets));
+    //convert task array to a string
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function getTweetsFromLocalStorage() {
-    let tweets;
-    const tweetsLS = localStorage.getItem('tweets');
-    if (tweetsLS === null) {
-        tweets = [];
+function getTasksFromLocalStorage() {
+    let tasks;
+    const tasksLS = localStorage.getItem('tasks');
+    if (tasksLS === null) {
+        tasks = [];
     } else {
-        tweets = JSON.parse(tweetsLS);
+        tasks = JSON.parse(tasksLS);
     }
-    return tweets;
+    return tasks;
 }
 
-//Prints Local Storage Tweets on Load
+//Prints Local Storage Tasks on Load
 function localStorageOnLoad() {
-    let tweets = getTweetsFromLocalStorage();
+    let tasks = getTasksFromLocalStorage();
 
     //Loop through storage and then print the values
 
-    tweets.forEach(function (tweet) {
-        //Array.prototype.forEach.call(tweets, function (tweet) {
+    tasks.forEach(function (task) {
+        //Array.prototype.forEach.call(tasks, function (task) {
         //The remove button
         const removeBtn = document.createElement('a');
-        removeBtn.classList = 'remove-tweet';
+        removeBtn.classList = 'remove-task';
         removeBtn.textContent = 'X';
 
         //Add text to the list
@@ -109,36 +109,36 @@ function localStorageOnLoad() {
         const li = document.createElement('li');
         //li = document.createElement('a');
         //br = document.createElement('br');
-        li.textContent = tweet;
+        li.textContent = task;
 
         //Add the remove button
         li.appendChild(removeBtn);
 
         //Add items to the list
-        tweetList.appendChild(li);
-        // tweetList.appendChild(br);
+        taskList.appendChild(li);
+        // taskList.appendChild(br);
     });
 }
 
-function removeTweetLocalStorage(tweet) {
+function removeTaskLocalStorage(task) {
 
-    //Get tweets from Storage
-    let tweets = getTweetsFromLocalStorage();
+    //Get tasks from Storage
+    let tasks = getTasksFromLocalStorage();
 
-    // Remove the X from tweet
-    const tweetDelete = tweet.substring(0, tweet.length - 1);
+    // Remove the X from task
+    const taskDelete = task.substring(0, task.length - 1);
 
-    //Loop through the tweets and remove the tweet that's equal
+    //Loop through the tasks and remove the task that's equal
 
-    tweets.forEach(function (tweetLS, index) {
-        //Array.prototype.forEach.call(tweets, function(tweetLS, index) {
-        if (tweetDelete === tweetLS) {
-            tweets.splice(index, 1);
+    tasks.forEach(function (taskLS, index) {
+        //Array.prototype.forEach.call(tasks, function(taskLS, index) {
+        if (taskDelete === taskLS) {
+            tasks.splice(index, 1);
         }
     });
 
     //Save data - without the removed list
-    localStorage.setItem('tweets', JSON.stringify(tweets));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 
 
 }
